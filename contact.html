@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Contact Us</h1>
+    </header>
+    
+    <main>
+        <section>
+            <h2>We'd Love to Hear From You</h2>
+            <p>Feel free to reach out if you have any questions, comments, or suggestions!</p>
+        </section>
+
+        <section>
+            <form action="https://formsubmit.co/blooketlord71@gmail.com" method="POST">
+                <!-- Prevent spam bots from abusing the form -->
+                <input type="hidden" name="_captcha" value="false">
+
+                <!-- Redirect to a thank you page after submission (Optional) -->
+                <input type="hidden" name="_next" value="https://demos92.glitch.me/thank-you.html">
+
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Your Message:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Demos. All rights reserved.</p>
+    </footer>
+</body>
+</html>
