@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <!-- Favicon -->
+    <link rel="icon" href="https://cdn.glitch.global/9f1ca76e-3ace-4177-9d69-0ac406bf468a/thumbnails%2FDEMOS.png?1741318396177" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        label {
+            font-size: 14px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>BMI Calculator</h2>
+        <div class="input-group">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" placeholder="Enter weight in kg" required>
+        </div>
+        <div class="input-group">
+            <label for="height">Height (m):</label>
+            <input type="number" step="0.01" id="height" placeholder="Enter height in meters" required>
+        </div>
+        <button onclick="calculateBMI()">Calculate BMI</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            let weight = document.getElementById('weight').value;
+            let height = document.getElementById('height').value;
+
+            if (weight && height) {
+                let bmi = weight / (height * height);
+                let resultText = `Your BMI is: ${bmi}`;
+
+                if (bmi < 18.5) {
+                    resultText += "<br>Category: Underweight";
+                } else if (bmi >= 18.5 && bmi < 24.9) {
+                    resultText += "<br>Category: Normal weight";
+                } else if (bmi >= 25 && bmi < 29.9) {
+                    resultText += "<br>Category: Overweight";
+                } else {
+                    resultText += "<br>Category: Obesity";
+                }
+
+                document.getElementById('result').innerHTML = resultText;
+            } else {
+                document.getElementById('result').innerHTML = "<span style='color: red;'>Please enter valid weight and height.</span>";
+            }
+        }
+    </script>
+</body>
+</html>
