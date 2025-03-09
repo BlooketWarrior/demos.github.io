@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Links</title>
+    <link rel="icon" href="https://cdn.glitch.global/9f1ca76e-3ace-4177-9d69-0ac406bf468a/thumbnails%2FDEMOS.png?1741318396177" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .calculator-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .calculator-list li {
+            margin: 10px 0;
+        }
+        .calculator-list a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 18px;
+        }
+        .calculator-list a:hover {
+            text-decoration: underline;
+        }
+        .account-section {
+            margin-bottom: 20px;
+        }
+        .account-section button {
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculator Links</h1>
+    <div id="account-section" class="account-section">
+        <!-- Account button will appear if logged in -->
+    </div>
+    <ul class="calculator-list">
+        <li><a href="basic-calculator.html" target="_blank">Basic Calculator</a></li>
+        <li><a href="scientific-calculator.html" target="_blank">Scientific Calculator</a></li>
+        <li><a href="loan-calculator.html" target="_blank">Loan Calculator</a></li>
+        <li><a href="bmi-calculator.html" target="_blank">BMI Calculator</a></li>
+        <li><a href="tip-calculator.html" target="_blank">Tip Calculator</a></li>
+        <li><a href="graphing-calculator.html" target="_blank">Graphing Calculator</a></li>
+    </ul>
+
+    <script>
+        // Function to simulate login state
+        let isLoggedIn = true; // Change this to false to simulate being logged out
+
+        const accountSection = document.getElementById('account-section');
+
+        if (isLoggedIn) {
+            // If user is logged in, show Account button and Log Out
+            accountSection.innerHTML = `
+                <button onclick="logOut()">Log Out</button>
+            `;
+        } else {
+            // If user is not logged in, show Login button
+            accountSection.innerHTML = `
+                <button onclick="logIn()">Log In</button>
+            `;
+        }
+
+        function logOut() {
+            // Simulate log out by setting logged-in state to false
+            isLoggedIn = false;
+            accountSection.innerHTML = `<button onclick="logIn()">Log In</button>`;
+            alert('You have logged out.');
+            window.location.href = 'https://demos92.glitch.me/'; // Redirect after logout
+        }
+
+        function logIn() {
+            // Simulate log in by setting logged-in state to true
+            isLoggedIn = true;
+            accountSection.innerHTML = `<button onclick="logOut()">Log Out</button>`;
+            alert('You have logged in.');
+            window.location.href = 'https://demos92.glitch.me/'; // Redirect after login
+        }
+    </script>
+</body>
+</html>
