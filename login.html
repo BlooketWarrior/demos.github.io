@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" href="https://cdn.glitch.global/9f1ca76e-3ace-4177-9d69-0ac406bf468a/thumbnails%2FDEMOS.png?1741318396177" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        a {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p id="login-error" style="color: red;"></p>
+        <p>Don't have an account? <a href="https://demos92.glitch.me/signup.html">Sign up</a></p>
+    </div>
+
+    <script>
+        // Auto-fill login fields if redirected from signup
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const signedUpUser = urlParams.get('username');
+            const signedUpPass = urlParams.get('password');
+
+            if (signedUpUser && signedUpPass) {
+                document.getElementById("login-username").value = signedUpUser;
+                document.getElementById("login-password").value = signedUpPass;
+            }
+        });
+
+        function login() {
+            var username = document.getElementById("login-username").value;
+            var password = document.getElementById("login-password").value;
+            var storedPassword = localStorage.getItem(username);
+
+            if (storedPassword && storedPassword === password) {
+                alert("Login successful!");
+                window.location.href = "https://demos92.glitch.me/selection-calculators.html"; // Redirect after login
+            } else {
+                document.getElementById("login-error").textContent = "Invalid username or password!";
+            }
+        }
+    </script>
+
+</body>
+</html>
