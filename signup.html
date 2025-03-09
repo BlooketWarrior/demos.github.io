@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="icon" href="https://cdn.glitch.global/9f1ca76e-3ace-4177-9d69-0ac406bf468a/thumbnails%2FDEMOS.png?1741318396177" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        a {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Sign Up</h2>
+        <input type="text" id="signup-username" placeholder="Choose a Username">
+        <input type="password" id="signup-password" placeholder="Choose a Password">
+        <button onclick="signup()">Sign Up</button>
+        <p id="signup-error" style="color: red;"></p>
+        <p>Already have an account? <a href="https://demos92.glitch.me/login.html">Login</a></p>
+    </div>
+
+    <script>
+        function signup() {
+            var username = document.getElementById("signup-username").value;
+            var password = document.getElementById("signup-password").value;
+
+            if (username === "" || password === "") {
+                document.getElementById("signup-error").textContent = "Fields cannot be empty!";
+                return;
+            }
+
+            if (localStorage.getItem(username)) {
+                document.getElementById("signup-error").textContent = "Username already exists!";
+                return;
+            }
+
+            localStorage.setItem(username, password);
+            alert("Signup successful! Redirecting to login...");
+
+            // Redirect to login page with credentials in URL
+            window.location.href = "https://demos92.glitch.me/login.html?username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
+        }
+    </script>
+
+</body>
+</html>
