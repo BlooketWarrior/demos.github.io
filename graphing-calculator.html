@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphing Calculator</title>
+    <link rel="icon" href="https://cdn.glitch.global/9f1ca76e-3ace-4177-9d69-0ac406bf468a/thumbnails%2FDEMOS.png?1741318396177" type="https://cdn.glitch.global/9f1ca76e-3ace-4177-9d69-0ac406bf468a/thumbnails%2FDEMOS.png?1741318396177"> <!-- Favicon link added -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.1/math.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            margin: 0;
+        }
+        #leftPanel {
+            width: 30%;
+            margin-right: 20px;
+            overflow-y: auto;
+        }
+        #rightPanel {
+            width: 65%;
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            border: 1px solid black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            text-align: right;
+            border: 1px solid #ddd;
+        }
+        input, select, button {
+            width: 80%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .colorSelector {
+            margin-bottom: 10px;
+        }
+        .equationSelector {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="leftPanel">
+        <h3>Enter Equations</h3>
+        <input type="text" id="equations" placeholder="Enter equations (e.g., x^2, x^3)">
+        
+        <div class="equationSelector">
+            <label for="colorSelect">Choose Line Color: </label>
+            <select id="colorSelect">
+                <option value="red">Red</option>
+                <option value="orange">Orange</option>
+                <option value="yellow">Yellow</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+                <option value="purple">Purple</option>
+                <option value="pink">Pink</option>
+                <option value="black">Black</option>
+            </select>
+        </div>
+        
+        <button onclick="plotGraph()">Graph</button>
+        <button onclick="clearGraph()">Clear</button>
+        
+        <table id="valuesTable">
+            <thead>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    
+    <div id="rightPanel">
+        <h1>Graphing Calculator</h1>
+        <canvas id="graphCanvas" width="500" height="500"></canvas>
+    </div>
+
+    <script>
+        let chartInstance = null;
+
+        function plotGraph() {
+            const equations = document.getElementById('equations').value.split(',');
+            const color = document.getElementById('colorSelect').value;
+            const ctx = document.getElementById('graphCanvas').getContext('2d');
+            const chartData = { labels: [], datasets: [] };
+            const tableBody = document.querySelector('#valuesTable tbody');
+            tableBody.innerHTML = ''; // Clear the table before adding new data
+
+            equations.forEach((equation, index) => {
+                const dataset = {
+                    label: `Equation ${index + 1}`,
+                    data: [],
+                    borderColor: color,
+                    fill: false
+                };
+
+                for (let x = -10; x <= 10; x += 0.1) {
+                    try {
+                        let y = math.evaluate(equation.trim().replace(/x/g, `(${x})`));
+                        if (index === 0) chartData.labels.push(x.toFixed(2));
+                        dataset.data.push({ x: x, y: y });
+
+                        if (index === 0) {
+                            const row = document.createElement('tr');
+                            const cellX = document.createElement('td');
+                            cellX.textContent = x.toFixed(2);
+                            const cellY = document.createElement('td');
+                            cellY.textContent = y.toFixed(2);
+                            row.appendChild(cellX);
+                            row.appendChild(cellY);
+                            tableBody.appendChild(row);
+                        }
+                    } catch (e) { console.error('Invalid equation'); return; }
+                }
+
+                chartData.datasets.push(dataset);
+            });
+
+            if (chartInstance) {
+                chartInstance.destroy(); // Destroy the previous chart instance if it exists
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'scatter',
+                data: chartData,
+                options: {
+                    scales: {
+                        x: { type: 'linear', position: 'bottom' },
+                        y: { type: 'linear' }
+                    }
+                }
+            });
+        }
+
+        function clearGraph() {
+            const tableBody = document.querySelector('#valuesTable tbody');
+            tableBody.innerHTML = ''; // Clear the table
+            const ctx = document.getElementById('graphCanvas').getContext('2d');
+            if (chartInstance) {
+                chartInstance.destroy(); // Clear the graph
+                chartInstance = null;
+            }
+        }
+    </script>
+</body>
+</html>
